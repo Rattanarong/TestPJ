@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:test1/utility/my_constant.dart';
 import 'package:test1/utility/my_dialog.dart';
@@ -236,23 +236,10 @@ class _RegisterState extends State<Register> {
       onPressed: () {
         if (formKey.currentState!.validate()) {
           print('data complete');
-          Insertdata();
         }
       },
       icon: Icon(Icons.cloud_upload),
     );
-  }
-
-  Future<Null> Insertdata() async {
-    String username = usernameController.text;
-    String password = passwordController.text;
-    String email = emailController.text;
-    String phone = phoneController.text;
-    print(
-        '## username = $username, password = $password, email = $email, phone = $phone');
-    String path =
-        '${Myconstat.domain}/smarthome/getUserWhereUser.php?isAdd=true&username=$username';
-    await Dio().get(path).then((value) => print('## value ==>> $value'));
   }
 
   Container buildTitle(String title) {

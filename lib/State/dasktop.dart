@@ -62,7 +62,9 @@ class _DasktopState extends State<Dasktop> {
           width: size * 0.6,
           child: ElevatedButton(
             style: Myconstat().MyButtonStyle(),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Myconstat.routemainpage);
+            },
             child: Text('Login'),
           ),
         ),

@@ -1,8 +1,13 @@
 // import 'package:dio/dio.dart';
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:test1/utility/my_constant.dart';
 import 'package:test1/utility/my_dialog.dart';
 import 'package:test1/widgets/show_title.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -203,12 +208,22 @@ class _RegisterState extends State<Register> {
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          buildCreateNew(),
-        ],
         title: Text('Create New Account'),
         backgroundColor: Myconstat.primary,
       ),
+      // body: Padding(
+      //   padding: const EdgeInsets.all(20),
+      //   child: ListView(
+      //     children: [
+      //       buildTitle('Register'),
+      //       buildUsername(size),
+      //       buildPassword(size),
+      //       buildEmail(size),
+      //       buildPhone(size),
+      //       buildRegister(size)
+      //     ],
+      //   ),
+      // ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         behavior: HitTestBehavior.opaque,
@@ -222,13 +237,48 @@ class _RegisterState extends State<Register> {
                 buildPassword(size),
                 buildEmail(size),
                 buildPhone(size),
-                buildRegister(size)
+                // buildRegister(size),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        Navigator.pushNamed(context, Myconstat.routedasktop);
+                        print('data complete');
+                        print('---------');
+                        print('username: ${usernameController.text}');
+                        print('password: ${passwordController.text}');
+                        print('email: ${emailController.text}');
+                        print('phone: ${phoneController.text}');
+                        postTodo();
+                        setState(() {
+                          usernameController.clear();
+                          passwordController.clear();
+                          emailController.clear();
+                          phoneController.clear();
+                        });
+                      }
+                    },
+                    child: Text('Register'),
+                    style: Myconstat().MyButtonStyle(),
+                  ),
+                )
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future postTodo() async {
+    var url = Uri.http('192.168.1.117:8000', '/api/post-newlist/');
+    Map<String, String> header = {'Content-type': 'application/json'};
+    String jsondata =
+        '{"username":"${usernameController.text}","password":"${passwordController.text}","email":"${emailController.text}","phone":"${phoneController.text}"}';
+    var response = await http.post(url, headers: header, body: jsondata);
+    print('-------reuslt-------');
+    print(response.body);
   }
 
   IconButton buildCreateNew() {

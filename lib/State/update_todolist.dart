@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:test1/State/led/led1.dart';
 import 'package:test1/State/swone.dart';
 import 'package:test1/utility/my_constant.dart';
 
@@ -52,18 +51,23 @@ class _UpdatePageState extends State<UpdatePage> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(20),
         child: ListView(
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 5,
-              child: FirstSwitch(),
+              child: FirstSwitch('Dart/Mqtt_client/', 'led1'),
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 3,
-              child: FirstSwitch(),
+              height: MediaQuery.of(context).size.height / 5,
+              child: FirstSwitch('Dart/Mqtt_client/', 'led2'),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 5,
+              child: FirstSwitch('Dart/Mqtt_client/', 'led3'),
             ),
             TextField(
                 controller: usernameController,
@@ -73,7 +77,7 @@ class _UpdatePageState extends State<UpdatePage> {
               height: 30,
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
               child: ElevatedButton(
                 onPressed: () {
                   print('---------------');
@@ -101,7 +105,7 @@ class _UpdatePageState extends State<UpdatePage> {
   }
 
   Future updateTodo() async {
-    var url = Uri.http('192.168.1.117:8000', '/api/update-newlist/$_V1');
+    var url = Uri.http('192.168.1.145:8000', '/api/update-newlist/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}","email":"${emailController.text}","phone":"${phoneController.text}"}';
@@ -111,7 +115,7 @@ class _UpdatePageState extends State<UpdatePage> {
   }
 
   Future deleteTodo() async {
-    var url = Uri.http('192.168.1.117:8000', '/api/delete-newlist/$_V1');
+    var url = Uri.http('192.168.1.145:8000', '/api/delete-newlist/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     var response = await http.delete(url, headers: header);
     print('-------reuslt-------');

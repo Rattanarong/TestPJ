@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:test1/utility/my_constant.dart';
-import 'package:test1/utility/my_dialog.dart';
+// import 'package:test1/utility/my_dialog.dart';
 import 'package:test1/widgets/show_title.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -272,7 +272,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future postTodo() async {
-    var url = Uri.http('192.168.1.117:8000', '/api/post-newlist/');
+    var url = Uri.http('192.168.1.145:8000', '/api/post-newlist/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}","email":"${emailController.text}","phone":"${phoneController.text}"}';
@@ -294,7 +294,7 @@ class _RegisterState extends State<Register> {
 
   Container buildTitle(String title) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 132),
+      margin: EdgeInsets.symmetric(vertical: 16),
       child: ShowTitle(
         title: title,
         textStyle: Myconstat().h4Style(),

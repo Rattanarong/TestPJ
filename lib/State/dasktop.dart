@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:test1/State/mainpage.dart';
 import 'package:test1/utility/my_constant.dart';
 import 'package:test1/widgets/show_image.dart';
 import 'package:test1/widgets/show_title.dart';
+import 'package:http/http.dart' as http;
 
 class Dasktop extends StatefulWidget {
   const Dasktop({Key? key}) : super(key: key);
@@ -11,6 +13,8 @@ class Dasktop extends StatefulWidget {
 }
 
 class _DasktopState extends State<Dasktop> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool statusRedEye = true;
 
   @override
@@ -59,10 +63,15 @@ class _DasktopState extends State<Dasktop> {
       children: [
         Container(
           margin: EdgeInsets.symmetric(vertical: 16),
-          width: size * 0.6,
+          // width: size * 0.6,
           child: ElevatedButton(
             style: Myconstat().MyButtonStyle(),
             onPressed: () {
+              // login();
+              setState(() {
+                usernameController.clear();
+                passwordController.clear();
+              });
               Navigator.pushNamed(context, Myconstat.routemainpage);
             },
             child: Text('Login'),
@@ -80,6 +89,7 @@ class _DasktopState extends State<Dasktop> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: usernameController,
             decoration: InputDecoration(
               labelStyle: Myconstat().h3Style(),
               labelText: 'User :',
@@ -110,6 +120,7 @@ class _DasktopState extends State<Dasktop> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: passwordController,
             obscureText: statusRedEye,
             decoration: InputDecoration(
               suffixIcon: IconButton(
@@ -169,4 +180,19 @@ class _DasktopState extends State<Dasktop> {
       ],
     );
   }
+
+  // Future login() async {
+  //   var url = Uri.http('192.168.1.86:8000', '/api/login/');
+  //   Map<String, String> header = {"Content-type": "application/json"};
+  //   String jsondata =
+  //       '{"username":"${usernameController.text}","password":"${passwordController.text}",}';
+  //   var response = await http.post(url, headers: header, body: jsondata);
+  //   print('----------');
+  //   print(response.body);
+  //   if (response.body == "true") {
+  //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //       return Mainpage();
+  //     }));
+  //   }
+  // }
 }

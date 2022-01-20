@@ -1,7 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:test1/utility/my_constant.dart';
 
+import 'dart:async';
+import 'dart:io';
+import 'package:test1/mqtt_client.dart';
+import 'package:test1/mqtt_server_client.dart';
+
 class FirstSwitch extends StatefulWidget {
+  final String topic;
+  final String no;
+  const FirstSwitch(
+    this.topic,
+    this.no,
+  );
+
   @override
   _FirstSwitchState createState() => _FirstSwitchState();
 }
@@ -91,32 +105,31 @@ class _FirstSwitchState extends State<FirstSwitch>
                 width: 240,
                 height: 240 * (150 / 283),
                 color: Colors.transparent,
-                child: Stack(
-                  children: <Widget>[
-                    AnimatedPositioned(
-                      duration: Duration(milliseconds: 320),
-                      top: 0,
-                      right: isOn ? 240 * (150 / 283) - 14 : 0,
-                      child: Opacity(
-                        opacity: 1 - _ctrl.value,
-                        child: Container(
-                          width: 240 * (150 / 283),
-                          height: 240 * (150 / 283),
-                          child: Center(
-                            child: Text(
-                              isOn ? "ON" : "OFF",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 20 - 8 * _ctrl.value,
-                                letterSpacing: 1.5,
-                              ),
+                child: Stack(children: <Widget>[
+                  AnimatedPositioned(
+                    duration: Duration(milliseconds: 320),
+                    top: 0,
+                    right: isOn ? 240 * (150 / 283) - 14 : 0,
+                    child: Opacity(
+                      opacity: 1 - _ctrl.value,
+                      child: Container(
+                        width: 240 * (150 / 283),
+                        height: 240 * (150 / 283),
+                        child: Center(
+                          child: Text(
+                            isOn ? "ON" : "OFF",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20 - 8 * _ctrl.value,
+                              letterSpacing: 1.5,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    AnimatedPositioned(
+                  ),
+                  AnimatedPositioned(
                       duration: Duration(milliseconds: 640),
                       curve: Curves.bounceOut,
                       top: 10,
@@ -126,6 +139,7 @@ class _FirstSwitchState extends State<FirstSwitch>
                           setState(() {
                             isOn = !isOn;
                           });
+                          mqttpub(widget.topic, widget.no, isOn);
                           _ctrl.forward().whenComplete(() {
                             _ctrl.reverse();
                           });
@@ -199,16 +213,84 @@ class _FirstSwitchState extends State<FirstSwitch>
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
+                      )),
+                ]),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<dynamic> checkled() async {
+    final client = MqttServerClient('electsut.trueddns.com', '');
+    client.port = 27860;
+    client.logging(on: false);
+    final connMess = MqttConnectMessage()
+        .withClientIdentifier('Mqtt_MyClientUniqueId')
+        .startClean() // Non persistent session for testing
+        .withWillQos(MqttQos.atLeastOnce);
+    print('EXAMPLE::Mosquitto client connecting....');
+    client.connectionMessage = connMess;
+    try {
+      await client.connect();
+    } on Exception catch (e) {
+      client.disconnect();
+    }
+    if (client.connectionStatus!.state == MqttConnectionState.connected) {
+      print('EXAMPLE::Mosquitto client connected');
+    } else {
+      /// Use status here rather than state if you also want the broker return code.
+      print(
+          'EXAMPLE::ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
+      client.disconnect();
+      exit(-1);
+    }
+
+    print('EXAMPLE::Subscribing');
+    const topic = 'Dart/Mqtt_client'; // Not a wildcard topic
+    client.subscribe(topic, MqttQos.atMostOnce);
+    client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
+      final recMess = c![0].payload as MqttPublishMessage;
+      final pt =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      print(
+          'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
+      print('');
+    });
+    await MqttUtilities.asyncSleep(3);
+    client.disconnect();
+  }
+
+  Future<dynamic> mqttpub(topic, no, senddata) async {
+    final client = MqttServerClient('electsut.trueddns.com', '');
+    client.port = 27860;
+    client.logging(on: false);
+    final connMess = MqttConnectMessage()
+        .withClientIdentifier('Mqtt_MyClientUniqueId')
+        .startClean()
+        .withWillQos(MqttQos.atLeastOnce);
+    print('EXAMPLE::Mosquitto client connecting....');
+    client.connectionMessage = connMess;
+
+    try {
+      await client.connect();
+    } on Exception catch (e) {
+      print('EXAMPLE::client exception - $e');
+      client.disconnect();
+    }
+
+    var pubTopic = '$topic$no';
+    final builder = MqttClientPayloadBuilder();
+    builder.addString("{'state':'$senddata'}");
+
+    /// Publish it
+    print('EXAMPLE::Publishing our topic');
+    client.publishMessage(pubTopic, MqttQos.exactlyOnce, builder.payload!);
+    await MqttUtilities.asyncSleep(3);
+    client.disconnect();
+    checkled();
   }
 }
 

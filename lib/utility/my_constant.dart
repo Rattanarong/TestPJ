@@ -10,6 +10,9 @@ class Myconstat {
   // static String routeqrcode = '/qrcode';
   static String routesmarthome = '/smarthome';
   static String routemainpage = '/mainpage';
+  static String routeled1 = '/led1';
+  static String routeupdate = '/update_todolist';
+  static String routeget = '/get';
 
   static String image1 = 'images/Smart home.png';
 

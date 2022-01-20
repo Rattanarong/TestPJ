@@ -71,7 +71,7 @@ class _AddPageState extends State<Getdata> {
 
   Future<void> getTodolist() async {
     List alltodo = [];
-    var url = Uri.http('192.168.1.117:8000', '/api/all-newlist');
+    var url = Uri.http('192.168.1.145:8000', '/api/all-newlist');
     var response = await http.get(url);
     // var result = json.decode(response.body);
     var result = utf8.decode(response.bodyBytes);

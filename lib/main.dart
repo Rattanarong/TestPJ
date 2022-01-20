@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:test1/State/Dasktop.dart';
-import 'package:test1/State/Login.dart';
 import 'package:test1/State/Register.dart';
 import 'package:test1/utility/my_constant.dart';
 // import 'package:test1/State/qrcode.dart';
 import 'package:test1/State/mainpage.dart';
+import 'package:test1/State/page/page.dart';
 
 final Map<String, WidgetBuilder> map = {
   '/dasktop': (BuildContext context) => Dasktop(),
   '/register': (BuildContext context) => Register(),
   '/mainpage': (BuildContext context) => Mainpage(),
+  '/page': (BuildContext context) => AddPage1(),
 };
 
 String? initlalRoute;

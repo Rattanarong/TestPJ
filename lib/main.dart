@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test1/State/Dasktop.dart';
 import 'package:test1/State/Register.dart';
+import 'package:test1/State/page/timer.dart';
+// import 'package:test1/State/update_todolist.dart';
 import 'package:test1/utility/my_constant.dart';
 // import 'package:test1/State/qrcode.dart';
 import 'package:test1/State/mainpage.dart';
@@ -11,6 +13,8 @@ final Map<String, WidgetBuilder> map = {
   '/register': (BuildContext context) => Register(),
   '/mainpage': (BuildContext context) => Mainpage(),
   '/page': (BuildContext context) => AddPage1(),
+  '/timer': (BuildContext context) => Timer(),
+  // '/update_todolist':(BuildContext context) => UpdatePage(V1, V2, V3),
 };
 
 String? initlalRoute;

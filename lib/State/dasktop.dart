@@ -67,7 +67,7 @@ class _DasktopState extends State<Dasktop> {
           child: ElevatedButton(
             style: Myconstat().MyButtonStyle(),
             onPressed: () {
-              // login();
+              login();
               setState(() {
                 usernameController.clear();
                 passwordController.clear();
@@ -181,18 +181,18 @@ class _DasktopState extends State<Dasktop> {
     );
   }
 
-  // Future login() async {
-  //   var url = Uri.http('192.168.1.86:8000', '/api/login/');
-  //   Map<String, String> header = {"Content-type": "application/json"};
-  //   String jsondata =
-  //       '{"username":"${usernameController.text}","password":"${passwordController.text}",}';
-  //   var response = await http.post(url, headers: header, body: jsondata);
-  //   print('----------');
-  //   print(response.body);
-  //   if (response.body == "true") {
-  //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //       return Mainpage();
-  //     }));
-  //   }
-  // }
+  Future login() async {
+    var url = Uri.http('192.168.10.106:8000', '/api/login/');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String jsondata =
+        '{"username":"${usernameController.text}","password":"${passwordController.text}",}';
+    var response = await http.post(url, headers: header, body: jsondata);
+    print('----------');
+    print(response.body);
+    if (response.body == "true") {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Mainpage();
+      }));
+    }
+  }
 }

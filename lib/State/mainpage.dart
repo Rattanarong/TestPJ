@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test1/State/page/page.dart';
+import 'package:test1/State/page/page2.dart';
 import 'package:test1/utility/my_constant.dart';
 
 class Mainpage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MainpageState extends State<Mainpage> {
                       size: 30,
                     )),
                 Tab(
-                    text: 'Utility',
+                    text: 'Options',
                     icon: Icon(
                       Icons.blur_on,
                       color: Myconstat.black,
@@ -49,7 +50,7 @@ class _MainpageState extends State<Mainpage> {
             children: [
               AddPage1(),
               Center(child: Text('Tab 2 content')),
-              Center(child: Text('Tab 3 content'))
+              options()
             ],
           ),
         ),

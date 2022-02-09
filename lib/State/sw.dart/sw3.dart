@@ -6,17 +6,17 @@ import 'dart:convert';
 import 'package:test1/State/swone.dart';
 import 'package:test1/utility/my_constant.dart';
 
-class UpdatePage extends StatefulWidget {
+class Update3 extends StatefulWidget {
   final V1, V2, V3;
-  const UpdatePage(this.V1, this.V2, this.V3);
+  const Update3(this.V1, this.V2, this.V3);
 
   @override
-  _UpdatePageState createState() => _UpdatePageState();
+  _Update3State createState() => _Update3State();
 }
 
-class _UpdatePageState extends State<UpdatePage> {
+class _Update3State extends State<Update3> {
   var _V1, _V2, _V3;
-  TextEditingController qrnameController = TextEditingController();
+  TextEditingController qrname3Controller = TextEditingController();
 
   @override
   void initState() {
@@ -24,7 +24,7 @@ class _UpdatePageState extends State<UpdatePage> {
     _V1 = widget.V1;
     _V2 = widget.V2;
     _V3 = widget.V3;
-    qrnameController.text = _V2;
+    qrname3Controller.text = _V2;
   }
 
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class _UpdatePageState extends State<UpdatePage> {
               child: FirstSwitch('Dart/Mqtt_client/', 'led3'),
             ),
             TextField(
-                controller: qrnameController,
+                controller: qrname3Controller,
                 decoration: InputDecoration(
                     labelText: 'Username', border: OutlineInputBorder())),
             SizedBox(
@@ -77,7 +77,7 @@ class _UpdatePageState extends State<UpdatePage> {
               child: ElevatedButton(
                 onPressed: () {
                   print('---------------');
-                  print('username: ${qrnameController.text}');
+                  print('username: ${qrname3Controller.text}');
                   updateTodo();
                   final snackBar = SnackBar(
                     backgroundColor: Myconstat.broun,
@@ -103,7 +103,7 @@ class _UpdatePageState extends State<UpdatePage> {
   Future updateTodo() async {
     var url = Uri.http('192.168.10.106:8000', '/api/update-devicelist/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
-    String jsondata = '{"qrname":"${qrnameController.text}"}';
+    String jsondata = '{"qrname3":"${qrname3Controller.text}"}';
     var response = await http.put(url, headers: header, body: jsondata);
     print('-------reuslt-------');
     print(response.body);

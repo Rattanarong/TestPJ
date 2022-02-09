@@ -13,6 +13,7 @@ class Myconstat {
   static String routeled1 = '/led1';
   static String routeupdate = '/update_todolist';
   static String routeget = '/get';
+  static String routetimer = '/timer';
 
   static String image1 = 'images/Smart home.png';
 
@@ -33,7 +34,7 @@ class Myconstat {
   static Color white1 = Color(0xfffafafa);
   static Color oragelight = Color(0xffffe0b2);
   static Color grey1 = Color(0xffffccbc);
-
+  static Color white2 = Color(0xfffff3e0);
   TextStyle h1Style() => TextStyle(
         fontSize: 24,
         color: dark,

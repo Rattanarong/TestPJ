@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 // import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:test1/State/get/get.dart';
+import 'package:test1/State/get/get1.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:test1/State/get/get2.dart';
+import 'package:test1/State/get/get3.dart';
+import 'package:test1/State/page/name.dart';
+import 'package:test1/State/page/name1.dart';
+import 'package:test1/State/page/name2.dart';
 import 'package:test1/utility/my_constant.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -28,7 +33,12 @@ class _AddPageState extends State<AddPage1> {
           color: Myconstat.primary1,
         ),
       ),
-      body: Getdata(),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ListView(
+          children: [Get1(), Get2(), Get3()],
+        ),
+      ),
     );
   }
 
@@ -47,7 +57,16 @@ class _AddPageState extends State<AddPage1> {
         this.qrcode = qrcode;
         print(qrcode);
         if (qrcode.contains("smarthome/lasdlkasck/1/looff")) {
-          Navigator.pushNamed(context, Myconstat.routeregister);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => codename()));
+        }
+        if (qrcode.contains("smarthome/lasdlkasck/2/looff")) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => codename2()));
+        }
+        if (qrcode.contains("smarthome/lasdlkasck/3/looff")) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => codename3()));
         }
       });
     } on PlatformException {

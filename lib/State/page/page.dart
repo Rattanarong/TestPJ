@@ -25,21 +25,15 @@ class _AddPageState extends State<AddPage1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Myconstat.black,
-        onPressed: startscan,
-        child: Icon(
-          Icons.qr_code_scanner_sharp,
-          color: Myconstat.primary1,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Myconstat.black,
+          onPressed: startscan,
+          child: Icon(
+            Icons.qr_code_scanner_sharp,
+            color: Myconstat.primary1,
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: [Get1(), Get2(), Get3()],
-        ),
-      ),
-    );
+        body: Get1());
   }
 
   Future<void> startscan() async {

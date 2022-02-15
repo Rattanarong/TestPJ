@@ -109,9 +109,9 @@ class _codename3State extends State<codename3> {
   }
 
   Future postname() async {
-    var url = Uri.http('192.168.10.106:8000', '/api/post-devicelist/');
+    var url = Uri.http('192.168.1.136:8000', '/api/post-devicelist3/');
     Map<String, String> header = {'Content-type': 'application/json'};
-    String jsondata = '{"qrname32":"${qrname3Controller.text}"}';
+    String jsondata = '{"qrname3":"${qrname3Controller.text}"}';
     var response = await http.post(url, headers: header, body: jsondata);
     print('-------reuslt-------');
     print(response.body);

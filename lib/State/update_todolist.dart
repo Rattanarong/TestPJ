@@ -101,7 +101,7 @@ class _UpdatePageState extends State<UpdatePage> {
   }
 
   Future updateTodo() async {
-    var url = Uri.http('192.168.10.106:8000', '/api/update-devicelist/$_V1');
+    var url = Uri.http('192.168.1.136:8000', '/api/update-devicelist1/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata = '{"qrname":"${qrnameController.text}"}';
     var response = await http.put(url, headers: header, body: jsondata);
@@ -110,7 +110,7 @@ class _UpdatePageState extends State<UpdatePage> {
   }
 
   Future deleteTodo() async {
-    var url = Uri.http('192.168.10.106:8000', '/api/delete-devicelist/$_V1');
+    var url = Uri.http('192.168.1.136:8000', '/api/delete-devicelist1/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     var response = await http.delete(url, headers: header);
     print('-------reuslt-------');

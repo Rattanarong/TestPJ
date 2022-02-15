@@ -272,7 +272,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future postTodo() async {
-    var url = Uri.http('192.168.10.106:8000', '/api/register/');
+    var url = Uri.http('192.168.1.136:8000', '/api/post-newlist/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}","email":"${emailController.text}","phone":"${phoneController.text}"}';

@@ -101,7 +101,7 @@ class _Update3State extends State<Update3> {
   }
 
   Future updateTodo() async {
-    var url = Uri.http('192.168.10.106:8000', '/api/update-devicelist/$_V1');
+    var url = Uri.http('192.168.1.136:8000', '/api/update-devicelist3/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata = '{"qrname3":"${qrname3Controller.text}"}';
     var response = await http.put(url, headers: header, body: jsondata);
@@ -110,7 +110,7 @@ class _Update3State extends State<Update3> {
   }
 
   Future deleteTodo() async {
-    var url = Uri.http('192.168.10.106:8000', '/api/delete-devicelist/$_V1');
+    var url = Uri.http('192.168.1.136:8000', '/api/delete-devicelist3/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     var response = await http.delete(url, headers: header);
     print('-------reuslt-------');

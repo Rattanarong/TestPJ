@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:test1/State/get/get1.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:test1/State/get/get2.dart';
-import 'package:test1/State/get/get3.dart';
 import 'package:test1/State/page/name.dart';
 import 'package:test1/State/page/name1.dart';
 import 'package:test1/State/page/name2.dart';

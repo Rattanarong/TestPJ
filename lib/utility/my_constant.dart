@@ -14,6 +14,7 @@ class Myconstat {
   static String routeupdate = '/update_todolist';
   static String routeget = '/get';
   static String routetimer = '/timer';
+  static String routeedit1 = '/sw1edit';
 
   static String image1 = 'images/Smart home.png';
 
@@ -35,6 +36,8 @@ class Myconstat {
   static Color oragelight = Color(0xffffe0b2);
   static Color grey1 = Color(0xffffccbc);
   static Color white2 = Color(0xfffff3e0);
+  static Color white = Color(0xffffffff);
+  static Color blue = Color(0xff2979ff);
   TextStyle h1Style() => TextStyle(
         fontSize: 24,
         color: dark,
@@ -43,12 +46,12 @@ class Myconstat {
 
   TextStyle h2Style() => TextStyle(
         fontSize: 18,
-        color: dark,
-        fontWeight: FontWeight.w700,
+        color: black,
+        fontWeight: FontWeight.w600,
       );
 
   TextStyle h3Style() => TextStyle(
-        fontSize: 14,
+        fontSize: 15,
         color: dark,
         fontWeight: FontWeight.normal,
       );
@@ -60,9 +63,33 @@ class Myconstat {
       );
 
   TextStyle h5Style() => TextStyle(
-        fontSize: 24,
+        fontSize: 26,
         color: broun,
         fontWeight: FontWeight.bold,
+      );
+
+  TextStyle h6Style() => TextStyle(
+        fontSize: 16,
+        color: white,
+        fontWeight: FontWeight.w600,
+      );
+
+  TextStyle h7Style() => TextStyle(
+        fontSize: 16,
+        color: white,
+        fontWeight: FontWeight.bold,
+      );
+
+  TextStyle h8Style() => TextStyle(
+        fontSize: 16,
+        color: blue,
+        fontWeight: FontWeight.normal,
+      );
+
+  TextStyle h9Style() => TextStyle(
+        fontSize: 16,
+        color: dark,
+        fontWeight: FontWeight.normal,
       );
 
   ButtonStyle MyButtonStyle() => ElevatedButton.styleFrom(
@@ -75,7 +102,7 @@ class Myconstat {
 
   ButtonStyle MyButtonStyle1() => ElevatedButton.styleFrom(
         primary: Myconstat.primary,
-        padding: const EdgeInsets.fromLTRB(100, 15, 100, 15),
+        padding: const EdgeInsets.fromLTRB(100, 18, 100, 18),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

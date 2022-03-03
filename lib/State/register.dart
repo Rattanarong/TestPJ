@@ -30,7 +30,7 @@ class _RegisterState extends State<Register> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 16),
-          width: size * 0.6,
+          width: size * 0.62,
           child: TextFormField(
             controller: emailController,
             validator: (value) {
@@ -66,7 +66,7 @@ class _RegisterState extends State<Register> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 16),
-          width: size * 0.6,
+          width: size * 0.62,
           child: TextFormField(
             controller: usernameController,
             validator: (value) {
@@ -102,7 +102,7 @@ class _RegisterState extends State<Register> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 16),
-          width: size * 0.6,
+          width: size * 0.62,
           child: TextFormField(
             controller: passwordController,
             validator: (value) {
@@ -155,7 +155,7 @@ class _RegisterState extends State<Register> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 16),
-          width: size * 0.6,
+          width: size * 0.62,
           child: TextFormField(
             controller: phoneController,
             keyboardType: TextInputType.phone,
@@ -211,19 +211,6 @@ class _RegisterState extends State<Register> {
         title: Text('Create New Account'),
         backgroundColor: Myconstat.primary,
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(20),
-      //   child: ListView(
-      //     children: [
-      //       buildTitle('Register'),
-      //       buildUsername(size),
-      //       buildPassword(size),
-      //       buildEmail(size),
-      //       buildPhone(size),
-      //       buildRegister(size)
-      //     ],
-      //   ),
-      // ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         behavior: HitTestBehavior.opaque,
@@ -237,7 +224,6 @@ class _RegisterState extends State<Register> {
                 buildPassword(size),
                 buildEmail(size),
                 buildPhone(size),
-                // buildRegister(size),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: ElevatedButton(
@@ -272,7 +258,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future postTodo() async {
-    var url = Uri.http('192.168.1.136:8000', '/api/post-newlist/');
+    var url = Uri.http('192.168.1.122:8000', '/api/register/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}","email":"${emailController.text}","phone":"${phoneController.text}"}';

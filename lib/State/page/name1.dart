@@ -15,13 +15,15 @@ class codename2 extends StatefulWidget {
 class _codename2State extends State<codename2> {
   final formKey = GlobalKey<FormState>();
   TextEditingController qrname2Controller = TextEditingController();
+  TextEditingController namesw21Controller = TextEditingController();
+  TextEditingController namesw22Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Account'),
+        title: Text('Setting Name'),
         backgroundColor: Myconstat.primary,
       ),
       body: GestureDetector(
@@ -34,7 +36,9 @@ class _codename2State extends State<codename2> {
               children: [
                 buildTitle('NameDevice'),
                 buildqrname(size),
-                // buildRegister(size),
+                buildTitle('SwitchName'),
+                buildnamesw1(size),
+                buildnamesw2(size),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: ElevatedButton(
@@ -67,18 +71,90 @@ class _codename2State extends State<codename2> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 16),
+          margin: EdgeInsets.only(top: 0),
           width: size * 0.6,
           child: TextFormField(
             controller: qrname2Controller,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'กรุณากรอก DeviceName';
+                return 'กรุณากรอก RoomName';
               }
             },
             decoration: InputDecoration(
               labelStyle: Myconstat().h3Style(),
-              labelText: 'DeviceName :',
+              labelText: 'RoomName :',
+              prefixIcon: Icon(
+                Icons.person,
+                color: Myconstat.light2,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Myconstat.dark1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Myconstat.light1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildnamesw1(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 0),
+          width: size * 0.6,
+          child: TextFormField(
+            controller: namesw21Controller,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก SwitchName1';
+              }
+            },
+            decoration: InputDecoration(
+              labelStyle: Myconstat().h3Style(),
+              labelText: 'SwitchName1 :',
+              prefixIcon: Icon(
+                Icons.person,
+                color: Myconstat.light2,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Myconstat.dark1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Myconstat.light1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildnamesw2(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 15),
+          width: size * 0.6,
+          child: TextFormField(
+            controller: namesw22Controller,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก SwitchName2';
+              }
+            },
+            decoration: InputDecoration(
+              labelStyle: Myconstat().h3Style(),
+              labelText: 'SwitchName2 :',
               prefixIcon: Icon(
                 Icons.person,
                 color: Myconstat.light2,
@@ -109,9 +185,10 @@ class _codename2State extends State<codename2> {
   }
 
   Future postname() async {
-    var url = Uri.http('192.168.1.136:8000', '/api/post-devicelist2/');
+    var url = Uri.http('192.168.1.122:8000', '/api/post-devicelist2/');
     Map<String, String> header = {'Content-type': 'application/json'};
-    String jsondata = '{"qrname2":"${qrname2Controller.text}"}';
+    String jsondata =
+        '{"qrname2":"${qrname2Controller.text}","namesw21":"${namesw21Controller.text}","namesw22":"${namesw22Controller.text}"}';
     var response = await http.post(url, headers: header, body: jsondata);
     print('-------reuslt-------');
     print(response.body);

@@ -13,9 +13,7 @@ class options extends StatefulWidget {
 class _optionsState extends State<options> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // getTodolist();
   }
 
   @override
@@ -27,27 +25,27 @@ class _optionsState extends State<options> {
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => CountdownPage()));
                   print('options');
                 },
-                child: Text('Timer'),
-                style: Myconstat().MyButtonStyle(),
+                child: Text('Timer', style: Myconstat().h7Style()),
+                style: Myconstat().MyButtonStyle1(),
               ),
             ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(10, 350, 10, 10),
+                padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => Dasktop()));
                     print('Logout');
                   },
-                  child: Text('Logout'),
-                  style: Myconstat().MyButtonStyle(),
+                  child: Text('Logout', style: Myconstat().h7Style()),
+                  style: Myconstat().MyButtonStyle1(),
                 ))
           ],
         ),

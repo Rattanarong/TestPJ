@@ -46,12 +46,15 @@ class _DasktopState extends State<Dasktop> {
       children: [
         ShowTitle(
           title: 'Non Account ?',
-          textStyle: Myconstat().h3Style(),
+          textStyle: Myconstat().h9Style(),
         ),
         TextButton(
           onPressed: () =>
               Navigator.pushNamed(context, Myconstat.routeregister),
-          child: Text('create Account'),
+          child: Text(
+            'create Account',
+            style: Myconstat().h8Style(),
+          ),
         ),
       ],
     );
@@ -63,16 +66,11 @@ class _DasktopState extends State<Dasktop> {
       children: [
         Container(
           margin: EdgeInsets.symmetric(vertical: 16),
-          // width: size * 0.6,
+          width: size * 0.6,
           child: ElevatedButton(
             style: Myconstat().MyButtonStyle(),
             onPressed: () {
-              // login();
-              setState(() {
-                usernameController.clear();
-                passwordController.clear();
-              });
-              Navigator.pushNamed(context, Myconstat.routemainpage);
+              login();
             },
             child: Text('Login'),
           ),
@@ -87,7 +85,7 @@ class _DasktopState extends State<Dasktop> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 16),
-          width: size * 0.6,
+          width: size * 0.65,
           child: TextFormField(
             controller: usernameController,
             decoration: InputDecoration(
@@ -118,7 +116,7 @@ class _DasktopState extends State<Dasktop> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 16),
-          width: size * 0.6,
+          width: size * 0.65,
           child: TextFormField(
             controller: passwordController,
             obscureText: statusRedEye,
@@ -181,18 +179,27 @@ class _DasktopState extends State<Dasktop> {
     );
   }
 
-  // Future login() async {
-  //   var url = Uri.http('192.168.10.106:8000', '/api/login/');
-  //   Map<String, String> header = {"Content-type": "application/json"};
-  //   String jsondata =
-  //       '{"username":"${usernameController.text}","password":"${passwordController.text}",}';
-  //   var response = await http.post(url, headers: header, body: jsondata);
-  //   print('----------');
-  //   print(response.body);
-  //   if (response.body == "true") {
-  //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //       return Mainpage();
-  //     }));
-  //   }
-  // }
+  Future login() async {
+    var url = Uri.http('192.168.1.122:8000', '/api/login/');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String jsondata =
+        '{"username":"${usernameController.text}","password":"${passwordController.text}"}';
+    var response = await http.post(url, headers: header, body: jsondata);
+    print('----------');
+    print(response.body);
+    if (response.body == "") {
+      passwordController.clear();
+    }
+    if (response.body == "false") {
+      final snackBar = SnackBar(
+        backgroundColor: Myconstat.broun,
+        content: const Text('เข้าสู่ระบบสำเร็จ'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // passwordController.clear();
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Mainpage();
+      }));
+    }
+  }
 }

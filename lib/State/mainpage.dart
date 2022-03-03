@@ -11,7 +11,7 @@ class Mainpage extends StatefulWidget {
 class _MainpageState extends State<Mainpage> {
   @override
   Widget build(BuildContext context) => DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text('SMART HOME'),
@@ -22,22 +22,14 @@ class _MainpageState extends State<Mainpage> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  text: 'Switch',
-                  icon: Icon(
-                    Icons.hdr_strong,
-                    color: Myconstat.black,
-                    size: 30,
-                  ),
-                ),
-                Tab(
-                    text: 'Device',
+                    child: Text('Device', style: Myconstat().h6Style()),
                     icon: Icon(
                       Icons.device_hub,
                       color: Myconstat.black,
                       size: 30,
                     )),
                 Tab(
-                    text: 'Options',
+                    child: Text('Options', style: Myconstat().h6Style()),
                     icon: Icon(
                       Icons.blur_on,
                       color: Myconstat.black,
@@ -49,7 +41,6 @@ class _MainpageState extends State<Mainpage> {
           body: TabBarView(
             children: [
               AddPage1(),
-              Center(child: Text('Tab 2 content')),
               options()
             ],
           ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:test1/State/sw.dart/sw1.dart';
+import 'package:test1/State/sw.dart/sw2.dart';
+import 'package:test1/State/sw.dart/sw3.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'package:test1/State/update_todolist.dart';
 import 'package:test1/utility/my_constant.dart';
 
 class Get1 extends StatefulWidget {
@@ -15,13 +16,13 @@ class Get1 extends StatefulWidget {
 
 class _AddPageState extends State<Get1> {
   List todolistitems = [];
+  List todolistitems2 = [];
+  List todolistitems3 = [];
   String qrcode = 'Hi';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getTodolist();
   }
 
   @override
@@ -33,52 +34,223 @@ class _AddPageState extends State<Get1> {
   }
 
   Widget todolistCreate() {
-    return ListView.builder(
-        itemCount: todolistitems.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              tileColor: Myconstat.white2,
-              title: Text("${todolistitems[index]['qrname1']}"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Update1(
-                          todolistitems[index]['id'],
-                          todolistitems[index]['qrname1'],
-                          todolistitems[index]['password'])),
-                ).then((value) => {
-                      setState(() {
-                        print(value);
-                        if (value == 'delete') {
-                          final snackBar = SnackBar(
-                            content: const Text('ลบเรียบร้อยแล้ว'),
-                          );
+    return Column(
+      children: [
+        FutureBuilder(
+            future: getTodolist(),
+            builder: (context, AsyncSnapshot snapshot) => snapshot.hasData
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        child: ListTile(
+                          tileColor: Myconstat.white2,
+                          title: Row(
+                            children: [
+                              Text(
+                                "${snapshot.data[index]['qrname1']}",
+                                style: Myconstat().h2Style(),
+                              ),
+                              Spacer(),
+                              Text('1 '),
+                              Icon(Icons.light),
+                            ],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Update1(
+                                        snapshot.data[index]['id'],
+                                        snapshot.data[index]['qrname1'],
+                                        snapshot.data[index]['namesw1'],
+                                      )),
+                            ).then((value) => {
+                                  setState(() {
+                                    print(value);
+                                    if (value == 'delete') {
+                                      final snackBar = SnackBar(
+                                        content: const Text('ลบเรียบร้อยแล้ว'),
+                                      );
 
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                        getTodolist();
-                      })
-                    });
-              },
-            ),
-          );
-        });
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                    getTodolist();
+                                  })
+                                });
+                          },
+                        ),
+                      );
+                    })
+                : Container(
+                    // width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height,
+                    // child: Center(
+                    //   child: CircularProgressIndicator(
+                    //     color: Colors.green,
+                    //   ),
+                    // ),
+                    )),
+        FutureBuilder(
+            future: getTodolist2(),
+            builder: (context, AsyncSnapshot snapshot) => snapshot.hasData
+                ? Container(
+                    child: Column(children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            child: ListTile(
+                              tileColor: Myconstat.white2,
+                              title: Row(
+                                children: [
+                                  Text(
+                                    "${snapshot.data[index]['qrname2']}",
+                                    style: Myconstat().h2Style(),
+                                  ),
+                                  Spacer(),
+                                  Text('2 '),
+                                  Icon(
+                                    Icons.light,
+                                    color: Myconstat.black,
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Update2(
+                                            snapshot.data[index]['id'],
+                                            snapshot.data[index]['qrname2'],
+                                            snapshot.data[index]['namesw21'],
+                                            snapshot.data[index]['namesw22'],
+                                          )),
+                                ).then((value) => {
+                                      setState(() {
+                                        print(value);
+                                        if (value == 'delete') {
+                                          final snackBar = SnackBar(
+                                            content:
+                                                const Text('ลบเรียบร้อยแล้ว'),
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        }
+                                        getTodolist();
+                                      })
+                                    });
+                              },
+                            ),
+                          );
+                        }),
+                  ]))
+                : Container(
+                    // width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height,
+                    // child: Center(
+                    //   child: CircularProgressIndicator(
+                    //     color: Colors.green,
+                    //   ),
+                    // ),
+                    )),
+        FutureBuilder(
+            future: getTodolist3(),
+            builder: (context, AsyncSnapshot snapshot) => snapshot.hasData
+                ? Container(
+                    child: Column(children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            child: ListTile(
+                              tileColor: Myconstat.white2,
+                              title: Row(
+                                children: [
+                                  Text(
+                                    "${snapshot.data[index]['qrname3']}",
+                                    style: Myconstat().h2Style(),
+                                  ),
+                                  Spacer(),
+                                  Text('3 '),
+                                  Icon(
+                                    Icons.light,
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Update3(
+                                            snapshot.data[index]['id'],
+                                            snapshot.data[index]['qrname3'],
+                                            snapshot.data[index]['namesw31'],
+                                            snapshot.data[index]['namesw32'],
+                                            snapshot.data[index]['namesw33'],
+                                          )),
+                                ).then((value) => {
+                                      setState(() {
+                                        print(value);
+                                        if (value == 'delete') {
+                                          final snackBar = SnackBar(
+                                            content:
+                                                const Text('ลบเรียบร้อยแล้ว'),
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        }
+                                        getTodolist();
+                                      })
+                                    });
+                              },
+                            ),
+                          );
+                        }),
+                  ]))
+                : Container(
+                    // width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height,
+                    // child: Center(
+                    //   child: CircularProgressIndicator(
+                    //     color: Colors.green,
+                    //   ),
+                    // ),
+                    ))
+      ],
+    );
   }
 
-  Future<void> getTodolist() async {
-    List alltodo = [];
-    var url = Uri.http('192.168.1.136:8000', '/api/all-devicelist1');
+  Future<dynamic> getTodolist() async {
+    var url = Uri.http('192.168.1.122:8000', '/api/all-devicelist1');
     var response = await http.get(url);
-    // var result = json.decode(response.body);
-    var result = utf8.decode(response.bodyBytes);
+    var result = json.decode(utf8.decode(response.bodyBytes));
     print(result);
-    setState(() {
-      todolistitems = jsonDecode(result);
-    });
+    return result;
+  }
+
+  Future<dynamic> getTodolist2() async {
+    var url = Uri.http('192.168.1.122:8000', '/api/all-devicelist2');
+    var response = await http.get(url);
+    var result = json.decode(utf8.decode(response.bodyBytes));
+    print(result);
+    return result;
+  }
+
+  Future<dynamic> getTodolist3() async {
+    var url = Uri.http('192.168.1.122:8000', '/api/all-devicelist3');
+    var response = await http.get(url);
+    var result = json.decode(utf8.decode(response.bodyBytes));
+    print(result);
+    return result;
   }
 }

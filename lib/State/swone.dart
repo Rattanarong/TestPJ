@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:test1/utility/my_constant.dart';
 
@@ -9,9 +9,11 @@ import 'package:test1/mqtt_client.dart';
 import 'package:test1/mqtt_server_client.dart';
 
 class FirstSwitch extends StatefulWidget {
+  final V1;
   final String topic;
   final String no;
   const FirstSwitch(
+    this.V1,
     this.topic,
     this.no,
   );
@@ -22,6 +24,8 @@ class FirstSwitch extends StatefulWidget {
 
 class _FirstSwitchState extends State<FirstSwitch>
     with SingleTickerProviderStateMixin {
+  var stsw = "";
+  var _V1;
   late AnimationController _ctrl;
   late Animation<double> _anim;
   bool isOn = false;
@@ -29,6 +33,7 @@ class _FirstSwitchState extends State<FirstSwitch>
   @override
   void initState() {
     super.initState();
+    _V1 = widget.V1;
     _ctrl =
         AnimationController(vsync: this, duration: Duration(milliseconds: 320))
           ..addListener(() {
@@ -138,6 +143,30 @@ class _FirstSwitchState extends State<FirstSwitch>
                         onTap: () {
                           setState(() {
                             isOn = !isOn;
+                            if (isOn == true) {
+                              stsw = "true";
+
+                              // swon == true;
+                              swon();
+                              readsw();
+                              print(stsw);
+                              // print(swon());
+                              // if (swon == true) {
+                              //   isOn = true;
+                              //   print(isOn);
+                              // }
+                            } else if (isOn == false) {
+                              stsw = "false";
+                              swoff();
+                              readsw();
+                              print(stsw);
+                              // if (swoff() == false) {
+                              //   isOn = false;
+                              //   print(isOn);
+                              // }
+                              // isOn = false;
+                              // print(isOn);
+                            }
                           });
                           mqttpub(widget.topic, widget.no, isOn);
                           _ctrl.forward().whenComplete(() {
@@ -223,6 +252,59 @@ class _FirstSwitchState extends State<FirstSwitch>
     );
   }
 
+  Future swon() async {
+    var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
+    Map<String, String> header = {'Content-type': 'application/json'};
+    String jsondata = '{"stsw1":"$stsw"}';
+    var response = await http.put(url, headers: header, body: jsondata);
+    print('-------reuslt-------');
+    print(response.body);
+  }
+
+  Future swoff() async {
+    var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
+    Map<String, String> header = {'Content-type': 'application/json'};
+    String jsondata = '{"stsw1":"$stsw"}';
+    var response = await http.put(url, headers: header, body: jsondata);
+    print('-------reuslt-------');
+    print(response.body);
+  }
+
+  Future readsw() async {
+    var url = Uri.http('192.168.1.146:8000', '/api/readsw/');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String jsondata = '{"stsw1":"${stsw}"}';
+    var response = await http.post(url, headers: header, body: jsondata);
+    print('----------');
+    print(response.body);
+    if (response.body == "false") {
+      print("false");
+      isOn = false;
+      // passwordController.clear();
+    }
+    if (response.body == "true") {
+      print("true");
+      isOn = true;
+      final snackBar = SnackBar(
+        backgroundColor: Myconstat.broun,
+        content: const Text('เข้าสู่ระบบสำเร็จ'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // passwordController.clear();
+      // Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //   return Mainpage();
+      // }));
+    }
+  }
+
+  Future<dynamic> getTodolist() async {
+    var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist1/$_V1');
+    var response = await http.get(url);
+    var result = json.decode(utf8.decode(response.bodyBytes));
+    print(result);
+    return result;
+  }
+
   Future<dynamic> checkled() async {
     final client = MqttServerClient('electsut.trueddns.com', '');
     client.port = 27860;
@@ -257,7 +339,9 @@ class _FirstSwitchState extends State<FirstSwitch>
           MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
       print(
           'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
-      print('');
+      var rt = json.decode(pt);
+      print(rt);
+      // print(pt);
     });
     await MqttUtilities.asyncSleep(3);
     client.disconnect();

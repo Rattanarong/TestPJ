@@ -60,10 +60,6 @@ class _name5editState extends State<name5edit> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Mainpage()));
-                  // setState(() {
-                  //   todo_title.clear();
-                  //   todo_detail.clear();
-                  // });
                 },
                 child: Text('ตกลง'),
                 style: Myconstat().MyButtonStyle(),
@@ -76,7 +72,7 @@ class _name5editState extends State<name5edit> {
   }
 
   Future updateTodo() async {
-    var url = Uri.http('192.168.1.122:8000', '/api/update-devicelist3/$_V1');
+    var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist3/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata = '{"namesw32":"${namesw32Controller.text}"}';
     var response = await http.put(url, headers: header, body: jsondata);

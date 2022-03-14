@@ -4,8 +4,8 @@ class Myconstat {
   static String appName = 'Smart home';
   static String domain = 'https://f800-183-89-66-98.ngrok.io';
 
+  // static String routelogin = '/login';
   static String routelogin = '/login';
-  static String routedasktop = '/dasktop';
   static String routeregister = '/register';
   // static String routeqrcode = '/qrcode';
   static String routesmarthome = '/smarthome';
@@ -94,7 +94,7 @@ class Myconstat {
 
   ButtonStyle MyButtonStyle() => ElevatedButton.styleFrom(
         primary: Myconstat.primary,
-        padding: const EdgeInsets.fromLTRB(100, 15, 100, 15),
+        padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

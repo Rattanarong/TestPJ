@@ -31,17 +31,6 @@ class _TimerState extends State<Timer> {
         title: Text(''),
       ),
       body: Container(
-        // padding: EdgeInsets.all(10),
-        // child: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     Text(
-        //       '${now.day} ${now.month} ${now.year}',
-        //       style: Myconstat().h4Style(),
-        //     ),
-        //     Text('เวลา ${now.hour} ${now.minute} ${now.second} วินาที')
-        //   ],
-        // ),
         padding: EdgeInsets.all(20),
         child: Wrap(
           direction: Axis.vertical,

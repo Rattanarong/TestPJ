@@ -2,6 +2,7 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:test1/State/login.dart';
 import 'package:test1/utility/my_constant.dart';
 // import 'package:test1/utility/my_dialog.dart';
 import 'package:test1/widgets/show_title.dart';
@@ -229,14 +230,15 @@ class _RegisterState extends State<Register> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, Myconstat.routedasktop);
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => Login()));
                         print('data complete');
                         print('---------');
                         print('username: ${usernameController.text}');
                         print('password: ${passwordController.text}');
                         print('email: ${emailController.text}');
                         print('phone: ${phoneController.text}');
-                        postTodo();
+                        post();
                         setState(() {
                           usernameController.clear();
                           passwordController.clear();
@@ -257,8 +259,8 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Future postTodo() async {
-    var url = Uri.http('192.168.1.122:8000', '/api/register/');
+  Future post() async {
+    var url = Uri.http('192.168.1.146:8000', '/api/register/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}","email":"${emailController.text}","phone":"${phoneController.text}"}';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test1/State/mainpage.dart';
 import 'package:test1/utility/my_constant.dart';
 import 'package:test1/widgets/show_title.dart';
 import 'package:http/http.dart' as http;
@@ -42,7 +43,10 @@ class _codenameState extends State<codename> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, Myconstat.routemainpage);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Mainpage()));
                         print('data complete');
                         print('---------');
                         print('NameDevice: ${qrname1Controller.text}');
@@ -96,34 +100,6 @@ class _codenameState extends State<codename> {
             ),
           ),
         ),
-        // Container(
-        //   margin: EdgeInsets.only(top: 16),
-        //   width: size * 0.6,
-        //   child: TextFormField(
-        //     controller: namesw1Controller,
-        //     validator: (value) {
-        //       if (value!.isEmpty) {
-        //         return 'กรุณากรอก DeviceName';
-        //       }
-        //     },
-        //     decoration: InputDecoration(
-        //       labelStyle: Myconstat().h3Style(),
-        //       labelText: 'DeviceName :',
-        //       prefixIcon: Icon(
-        //         Icons.person,
-        //         color: Myconstat.light2,
-        //       ),
-        //       enabledBorder: OutlineInputBorder(
-        //         borderSide: BorderSide(color: Myconstat.dark1),
-        //         borderRadius: BorderRadius.circular(20),
-        //       ),
-        //       focusedBorder: OutlineInputBorder(
-        //         borderSide: BorderSide(color: Myconstat.light1),
-        //         borderRadius: BorderRadius.circular(20),
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -175,10 +151,10 @@ class _codenameState extends State<codename> {
   }
 
   Future postname() async {
-    var url = Uri.http('192.168.1.122:8000', '/api/post-devicelist1/');
+    var url = Uri.http('192.168.1.146:8000', '/api/post-devicelist1/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
-        '{"qrname1":"${qrname1Controller.text}","namesw1":"${namesw1Controller.text}"}';
+        '{"qrname1":"${qrname1Controller.text}","namesw1":"${namesw1Controller.text}","stsw1":"false"}';
     var response = await http.post(url, headers: header, body: jsondata);
     print('-------reuslt-------');
     print(response.body);

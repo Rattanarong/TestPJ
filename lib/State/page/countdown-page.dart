@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:smarthome/State/mainpage.dart';
@@ -5,10 +7,21 @@ import 'package:flutter/material.dart';
 // import 'package:smarthome/widgets/round-button.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:test1/State/mainpage.dart';
+import 'package:test1/mqtt_client.dart';
+import 'package:test1/mqtt_server_client.dart';
 import 'package:test1/widgets/round-button.dart';
 
 class CountdownPage extends StatefulWidget {
-  const CountdownPage({Key? key}) : super(key: key);
+  final String topic;
+  final String no1;
+  final String no2;
+  final String no3;
+  const CountdownPage(
+    this.topic,
+    this.no1,
+    this.no2,
+    this.no3,
+  );
 
   @override
   _CountdownPageState createState() => _CountdownPageState();
@@ -31,6 +44,7 @@ class _CountdownPageState extends State<CountdownPage>
 
   void notify() {
     if (countText == '0:00:00') {
+      mqttpub(widget.topic, widget.no1, widget.no2, widget.no3, false);
       FlutterRingtonePlayer.playNotification();
     }
   }
@@ -67,16 +81,6 @@ class _CountdownPageState extends State<CountdownPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   backgroundColor: Colors.yellow[700],
-      //   elevation: 0,
-      //   title: const Text(
-      //     "Timer",
-      //     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      //   ),
-      // ),
       backgroundColor: Color(0xfff5fbff),
       body: Column(
         children: [
@@ -176,5 +180,80 @@ class _CountdownPageState extends State<CountdownPage>
         ],
       ),
     );
+  }
+
+  Future<dynamic> checkled() async {
+    final client = MqttServerClient('electsut.trueddns.com', '');
+    client.port = 27860;
+    client.logging(on: false);
+    final connMess = MqttConnectMessage()
+        .withClientIdentifier('Mqtt_MyClientUniqueId')
+        .startClean() // Non persistent session for testing
+        .withWillQos(MqttQos.atLeastOnce);
+    print('EXAMPLE::Mosquitto client connecting....');
+    client.connectionMessage = connMess;
+    try {
+      await client.connect();
+    } on Exception catch (e) {
+      client.disconnect();
+    }
+    if (client.connectionStatus!.state == MqttConnectionState.connected) {
+      print('EXAMPLE::Mosquitto client connected');
+    } else {
+      /// Use status here rather than state if you also want the broker return code.
+      print(
+          'EXAMPLE::ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
+      client.disconnect();
+      exit(-1);
+    }
+
+    print('EXAMPLE::Subscribing');
+    const topic = 'Dart/Mqtt_client'; // Not a wildcard topic
+    client.subscribe(topic, MqttQos.atMostOnce);
+    client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
+      final recMess = c![0].payload as MqttPublishMessage;
+      final pt =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      print(
+          'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
+      print('');
+    });
+    await MqttUtilities.asyncSleep(3);
+    client.disconnect();
+  }
+
+  Future<dynamic> mqttpub(topic, no1, no2, no3, senddata) async {
+    final client = MqttServerClient('electsut.trueddns.com', '');
+    client.port = 27860;
+    client.logging(on: false);
+    final connMess = MqttConnectMessage()
+        .withClientIdentifier('Mqtt_MyClientUniqueId')
+        .startClean()
+        .withWillQos(MqttQos.atLeastOnce);
+    print('EXAMPLE::Mosquitto client connecting....');
+    client.connectionMessage = connMess;
+
+    try {
+      await client.connect();
+    } on Exception catch (e) {
+      print('EXAMPLE::client exception - $e');
+      client.disconnect();
+    }
+
+    var pubTopic1 = '$topic$no1';
+    var pubTopic2 = '$topic$no2';
+    var pubTopic3 = '$topic$no3';
+    final builder = MqttClientPayloadBuilder();
+    builder.addString("{'state':'$senddata'}");
+
+    /// Publish it
+    print('EXAMPLE::Publishing our topic');
+    client.publishMessage(pubTopic1, MqttQos.exactlyOnce, builder.payload!);
+    client.publishMessage(pubTopic2, MqttQos.exactlyOnce, builder.payload!);
+    client.publishMessage(pubTopic3, MqttQos.exactlyOnce, builder.payload!);
+    // client.subscriptionsManager
+    await MqttUtilities.asyncSleep(3);
+    client.disconnect();
+    checkled();
   }
 }

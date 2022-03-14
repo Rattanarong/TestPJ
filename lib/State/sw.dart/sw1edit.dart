@@ -60,10 +60,6 @@ class _edit1State extends State<edit1> {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Mainpage()));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  // setState(() {
-                  //   todo_title.clear();
-                  //   todo_detail.clear();
-                  // });
                 },
                 child: Text('ตกลง'),
                 style: Myconstat().MyButtonStyle(),
@@ -76,7 +72,7 @@ class _edit1State extends State<edit1> {
   }
 
   Future updateTodo() async {
-    var url = Uri.http('192.168.1.122:8000', '/api/update-devicelist1/$_V1');
+    var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata = '{"qrname1":"${qrname1Controller.text}"}';
     var response = await http.put(url, headers: header, body: jsondata);

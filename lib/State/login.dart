@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:test1/State/mainpage.dart';
+import 'package:test1/State/register.dart';
 import 'package:test1/utility/my_constant.dart';
 import 'package:test1/widgets/show_image.dart';
 import 'package:test1/widgets/show_title.dart';
 import 'package:http/http.dart' as http;
 
-class Dasktop extends StatefulWidget {
-  const Dasktop({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
-  _DasktopState createState() => _DasktopState();
+  _LoginState createState() => _LoginState();
 }
 
-class _DasktopState extends State<Dasktop> {
+class _LoginState extends State<Login> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool statusRedEye = true;
@@ -49,8 +50,8 @@ class _DasktopState extends State<Dasktop> {
           textStyle: Myconstat().h9Style(),
         ),
         TextButton(
-          onPressed: () =>
-              Navigator.pushNamed(context, Myconstat.routeregister),
+          onPressed: () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Register())),
           child: Text(
             'create Account',
             style: Myconstat().h8Style(),
@@ -180,7 +181,7 @@ class _DasktopState extends State<Dasktop> {
   }
 
   Future login() async {
-    var url = Uri.http('192.168.1.122:8000', '/api/login/');
+    var url = Uri.http('192.168.1.146:8000', '/api/login/');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}"}';
@@ -190,7 +191,7 @@ class _DasktopState extends State<Dasktop> {
     if (response.body == "") {
       passwordController.clear();
     }
-    if (response.body == "false") {
+    if (response.body == "") {
       final snackBar = SnackBar(
         backgroundColor: Myconstat.broun,
         content: const Text('เข้าสู่ระบบสำเร็จ'),

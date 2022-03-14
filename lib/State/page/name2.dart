@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test1/State/mainpage.dart';
 import 'package:test1/utility/my_constant.dart';
 import 'package:test1/widgets/show_title.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +47,10 @@ class _codename3State extends State<codename3> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, Myconstat.routemainpage);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Mainpage()));
                         print('data complete');
                         print('---------');
                         print('NameDevice: ${qrname3Controller.text}');
@@ -223,7 +227,7 @@ class _codename3State extends State<codename3> {
   }
 
   Future postname() async {
-    var url = Uri.http('192.168.1.122:8000', '/api/post-devicelist3/');
+    var url = Uri.http('192.168.1.146:8000', '/api/post-devicelist3/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"qrname3":"${qrname3Controller.text}","namesw31":"${namesw31Controller.text}","namesw32":"${namesw32Controller.text}","namesw33":"${namesw33Controller.text}"}';

@@ -1,10 +1,6 @@
-// import 'package:dio/dio.dart';
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:test1/State/login.dart';
 import 'package:test1/utility/my_constant.dart';
-// import 'package:test1/utility/my_dialog.dart';
 import 'package:test1/widgets/show_title.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -260,7 +256,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future post() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/register/');
+    var url = Uri.http('192.168.1.120:8000', '/api/register/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}","email":"${emailController.text}","phone":"${phoneController.text}"}';

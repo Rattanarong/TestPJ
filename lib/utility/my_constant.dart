@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 class Myconstat {
   static String appName = 'Smart home';
   static String domain = 'https://f800-183-89-66-98.ngrok.io';
-
-  // static String routelogin = '/login';
   static String routelogin = '/login';
   static String routeregister = '/register';
-  // static String routeqrcode = '/qrcode';
   static String routesmarthome = '/smarthome';
-  static String routemainpage = '/mainpage';
+  // static String routemainpage = '/mainpage';
   static String routeled1 = '/led1';
   static String routeupdate = '/update_todolist';
   static String routeget = '/get';
   static String routetimer = '/timer';
   static String routeedit1 = '/sw1edit';
+  static String routecd1 = '/countdown-page';
+  static String routecd2 = '/countdown-page1';
+  static String routecd3 = '/countdown-page2';
 
   static String image1 = 'images/Smart home.png';
 
@@ -69,7 +69,7 @@ class Myconstat {
       );
 
   TextStyle h6Style() => TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         color: white,
         fontWeight: FontWeight.w600,
       );

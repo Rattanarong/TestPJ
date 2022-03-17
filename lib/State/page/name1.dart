@@ -35,7 +35,7 @@ class _codename2State extends State<codename2> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                buildTitle('NameDevice'),
+                buildTitle('DeviceName'),
                 buildqrname(size),
                 buildTitle('SwitchName'),
                 buildnamesw1(size),
@@ -81,12 +81,12 @@ class _codename2State extends State<codename2> {
             controller: qrname2Controller,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'กรุณากรอก RoomName';
+                return 'กรุณากรอก DeviceName';
               }
             },
             decoration: InputDecoration(
               labelStyle: Myconstat().h3Style(),
-              labelText: 'RoomName :',
+              labelText: 'DeviceName :',
               prefixIcon: Icon(
                 Icons.person,
                 color: Myconstat.light2,
@@ -189,7 +189,7 @@ class _codename2State extends State<codename2> {
   }
 
   Future postname() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/post-devicelist2/');
+    var url = Uri.http('192.168.1.120:8000', '/api/post-devicelist2/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"qrname2":"${qrname2Controller.text}","namesw21":"${namesw21Controller.text}","namesw22":"${namesw22Controller.text}"}';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:test1/State/page/countdown-page.dart';
 import 'package:test1/State/sw.dart/name1edit.dart';
 import 'package:test1/State/sw.dart/sw1edit.dart';
 import 'dart:async';
@@ -90,7 +91,16 @@ class _Update1State extends State<Update1> {
                                 MaterialPageRoute(
                                     builder: (context) => name1edit(_V1, _V3)));
                           },
-                          icon: Icon(Icons.edit, color: Colors.black))
+                          icon: Icon(Icons.edit, color: Colors.black)),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CountdownPage(
+                                        'Dart/Mqtt_client/', 'led1')));
+                          },
+                          icon: Icon(Icons.timer, color: Colors.black)),
                     ],
                   ),
                 ),
@@ -103,7 +113,7 @@ class _Update1State extends State<Update1> {
   }
 
   Future deleteTodo() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/delete-devicelist1/$_V1');
+    var url = Uri.http('192.168.1.120:8000', '/api/delete-devicelist1/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     var response = await http.delete(url, headers: header);
     print('-------reuslt-------');
@@ -111,7 +121,7 @@ class _Update1State extends State<Update1> {
   }
 
   Future<dynamic> getTodolist() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist1');
+    var url = Uri.http('192.168.1.120:8000', '/api/all-devicelist1');
     var response = await http.get(url);
     var result = json.decode(utf8.decode(response.bodyBytes));
     print(result);

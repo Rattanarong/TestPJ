@@ -27,14 +27,14 @@ class _codenameState extends State<codename> {
         backgroundColor: Myconstat.primary,
       ),
       body: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        // onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         behavior: HitTestBehavior.opaque,
         child: Form(
           key: formKey,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                buildTitle('RoomName'),
+                buildTitle('DeviceName'),
                 buildqrname(size),
                 buildTitle('SwitchName'),
                 buildnamesw(size),
@@ -79,12 +79,12 @@ class _codenameState extends State<codename> {
             controller: qrname1Controller,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'กรุณากรอก RoomName';
+                return 'กรุณากรอก DeviceName';
               }
             },
             decoration: InputDecoration(
               labelStyle: Myconstat().h3Style(),
-              labelText: 'RoomName :',
+              labelText: 'DeviceName :',
               prefixIcon: Icon(
                 Icons.person,
                 color: Myconstat.light2,
@@ -151,7 +151,7 @@ class _codenameState extends State<codename> {
   }
 
   Future postname() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/post-devicelist1/');
+    var url = Uri.http('192.168.1.120:8000', '/api/post-devicelist1/');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata =
         '{"qrname1":"${qrname1Controller.text}","namesw1":"${namesw1Controller.text}","stsw1":"false"}';

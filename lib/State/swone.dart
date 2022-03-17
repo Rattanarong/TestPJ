@@ -143,30 +143,30 @@ class _FirstSwitchState extends State<FirstSwitch>
                         onTap: () {
                           setState(() {
                             isOn = !isOn;
-                            if (isOn == true) {
-                              stsw = "true";
+                            // if (isOn == true) {
+                            //   stsw = "true";
 
-                              // swon == true;
-                              swon();
-                              readsw();
-                              print(stsw);
-                              // print(swon());
-                              // if (swon == true) {
-                              //   isOn = true;
-                              //   print(isOn);
-                              // }
-                            } else if (isOn == false) {
-                              stsw = "false";
-                              swoff();
-                              readsw();
-                              print(stsw);
-                              // if (swoff() == false) {
-                              //   isOn = false;
-                              //   print(isOn);
-                              // }
-                              // isOn = false;
-                              // print(isOn);
-                            }
+                            //   // swon == true;
+                            //   swon();
+                            //   readsw();
+                            //   print(stsw);
+                            //   // print(swon());
+                            //   // if (swon == true) {
+                            //   //   isOn = true;
+                            //   //   print(isOn);
+                            //   // }
+                            // } else if (isOn == false) {
+                            //   stsw = "false";
+                            //   swoff();
+                            //   readsw();
+                            //   print(stsw);
+                            //   // if (swoff() == false) {
+                            //   //   isOn = false;
+                            //   //   print(isOn);
+                            //   // }
+                            //   // isOn = false;
+                            //   // print(isOn);
+                            // }
                           });
                           mqttpub(widget.topic, widget.no, isOn);
                           _ctrl.forward().whenComplete(() {
@@ -252,58 +252,58 @@ class _FirstSwitchState extends State<FirstSwitch>
     );
   }
 
-  Future swon() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
-    Map<String, String> header = {'Content-type': 'application/json'};
-    String jsondata = '{"stsw1":"$stsw"}';
-    var response = await http.put(url, headers: header, body: jsondata);
-    print('-------reuslt-------');
-    print(response.body);
-  }
+  // Future swon() async {
+  //   var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
+  //   Map<String, String> header = {'Content-type': 'application/json'};
+  //   String jsondata = '{"stsw1":"$stsw"}';
+  //   var response = await http.put(url, headers: header, body: jsondata);
+  //   print('-------reuslt-------');
+  //   print(response.body);
+  // }
 
-  Future swoff() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
-    Map<String, String> header = {'Content-type': 'application/json'};
-    String jsondata = '{"stsw1":"$stsw"}';
-    var response = await http.put(url, headers: header, body: jsondata);
-    print('-------reuslt-------');
-    print(response.body);
-  }
+  // Future swoff() async {
+  //   var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
+  //   Map<String, String> header = {'Content-type': 'application/json'};
+  //   String jsondata = '{"stsw1":"$stsw"}';
+  //   var response = await http.put(url, headers: header, body: jsondata);
+  //   print('-------reuslt-------');
+  //   print(response.body);
+  // }
 
-  Future readsw() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/readsw/');
-    Map<String, String> header = {"Content-type": "application/json"};
-    String jsondata = '{"stsw1":"${stsw}"}';
-    var response = await http.post(url, headers: header, body: jsondata);
-    print('----------');
-    print(response.body);
-    if (response.body == "false") {
-      print("false");
-      isOn = false;
-      // passwordController.clear();
-    }
-    if (response.body == "true") {
-      print("true");
-      isOn = true;
-      final snackBar = SnackBar(
-        backgroundColor: Myconstat.broun,
-        content: const Text('เข้าสู่ระบบสำเร็จ'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      // passwordController.clear();
-      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //   return Mainpage();
-      // }));
-    }
-  }
+  // Future readsw() async {
+  //   var url = Uri.http('192.168.1.146:8000', '/api/readsw/');
+  //   Map<String, String> header = {"Content-type": "application/json"};
+  //   String jsondata = '{"stsw1":"${stsw}"}';
+  //   var response = await http.post(url, headers: header, body: jsondata);
+  //   print('----------');
+  //   print(response.body);
+  //   if (response.body == "false") {
+  //     print("false");
+  //     isOn = false;
+  //     // passwordController.clear();
+  //   }
+  //   if (response.body == "true") {
+  //     print("true");
+  //     isOn = true;
+  //     final snackBar = SnackBar(
+  //       backgroundColor: Myconstat.broun,
+  //       content: const Text('เข้าสู่ระบบสำเร็จ'),
+  //     );
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //     // passwordController.clear();
+  //     // Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //     //   return Mainpage();
+  //     // }));
+  //   }
+  // }
 
-  Future<dynamic> getTodolist() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist1/$_V1');
-    var response = await http.get(url);
-    var result = json.decode(utf8.decode(response.bodyBytes));
-    print(result);
-    return result;
-  }
+  // Future<dynamic> getTodolist() async {
+  //   var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist1/$_V1');
+  //   var response = await http.get(url);
+  //   var result = json.decode(utf8.decode(response.bodyBytes));
+  //   print(result);
+  //   return result;
+  // }
 
   Future<dynamic> checkled() async {
     final client = MqttServerClient('electsut.trueddns.com', '');

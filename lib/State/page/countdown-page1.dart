@@ -11,19 +11,21 @@ import 'package:test1/mqtt_client.dart';
 import 'package:test1/mqtt_server_client.dart';
 import 'package:test1/widgets/round-button.dart';
 
-class CountdownPage extends StatefulWidget {
+class CountdownPage1 extends StatefulWidget {
   final String topic;
   final String no1;
-  const CountdownPage(
+  final String no2;
+  const CountdownPage1(
     this.topic,
     this.no1,
+    this.no2,
   );
 
   @override
-  _CountdownPageState createState() => _CountdownPageState();
+  _CountdownPage1State createState() => _CountdownPage1State();
 }
 
-class _CountdownPageState extends State<CountdownPage>
+class _CountdownPage1State extends State<CountdownPage1>
     with TickerProviderStateMixin {
   late AnimationController controller;
 
@@ -40,7 +42,7 @@ class _CountdownPageState extends State<CountdownPage>
 
   void notify() {
     if (countText == '0:00:00') {
-      mqttpub(widget.topic, widget.no1, false);
+      mqttpub(widget.topic, widget.no1, widget.no2, false);
       FlutterRingtonePlayer.playNotification();
     }
   }
@@ -218,7 +220,7 @@ class _CountdownPageState extends State<CountdownPage>
     client.disconnect();
   }
 
-  Future<dynamic> mqttpub(topic, no1, senddata) async {
+  Future<dynamic> mqttpub(topic, no1, no2, senddata) async {
     final client = MqttServerClient('electsut.trueddns.com', '');
     client.port = 27860;
     client.logging(on: false);
@@ -237,12 +239,14 @@ class _CountdownPageState extends State<CountdownPage>
     }
 
     var pubTopic1 = '$topic$no1';
+    var pubTopic2 = '$topic$no2';
     final builder = MqttClientPayloadBuilder();
     builder.addString("{'state':'$senddata'}");
 
     /// Publish it
     print('EXAMPLE::Publishing our topic');
     client.publishMessage(pubTopic1, MqttQos.exactlyOnce, builder.payload!);
+    client.publishMessage(pubTopic2, MqttQos.exactlyOnce, builder.payload!);
     // client.subscriptionsManager
     await MqttUtilities.asyncSleep(3);
     client.disconnect();

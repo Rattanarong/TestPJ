@@ -31,8 +31,8 @@ class _optionsState extends State<options> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CountdownPage(
-                              'Dart/Mqtt_client/', 'led1', 'led2', 'led3')));
+                          builder: (context) =>
+                              CountdownPage('Dart/Mqtt_client/', 'led1')));
                   print('options');
                 },
                 child: Text('Timer', style: Myconstat().h7Style()),

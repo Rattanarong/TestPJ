@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:test1/State/page/countdown-page.dart';
+import 'package:test1/State/page/countdown-page1.dart';
 import 'package:test1/State/sw.dart/name2-1edit.dart';
 import 'package:test1/State/sw.dart/name2-2edit.dart';
 import 'package:test1/State/sw.dart/sw2edit.dart';
@@ -93,7 +95,16 @@ class _Update2State extends State<Update2> {
                                 MaterialPageRoute(
                                     builder: (context) => name2edit(_V1, _V3)));
                           },
-                          icon: Icon(Icons.edit, color: Colors.black))
+                          icon: Icon(Icons.edit, color: Colors.black)),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CountdownPage(
+                                        'Dart/Mqtt_client/', 'led1')));
+                          },
+                          icon: Icon(Icons.timer, color: Colors.black)),
                     ],
                   ),
                 ),
@@ -120,7 +131,16 @@ class _Update2State extends State<Update2> {
                                 MaterialPageRoute(
                                     builder: (context) => name3edit(_V1, _V4)));
                           },
-                          icon: Icon(Icons.edit, color: Colors.black))
+                          icon: Icon(Icons.edit, color: Colors.black)),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CountdownPage(
+                                        'Dart/Mqtt_client/', 'led2')));
+                          },
+                          icon: Icon(Icons.timer, color: Colors.black)),
                     ],
                   ),
                 ),
@@ -133,7 +153,7 @@ class _Update2State extends State<Update2> {
   }
 
   Future deleteTodo() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/delete-devicelist2/$_V1');
+    var url = Uri.http('192.168.1.120:8000', '/api/delete-devicelist2/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     var response = await http.delete(url, headers: header);
     print('-------reuslt-------');
@@ -141,7 +161,7 @@ class _Update2State extends State<Update2> {
   }
 
   Future<dynamic> getTodolist() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist2');
+    var url = Uri.http('192.168.1.120:8000', '/api/all-devicelist2');
     var response = await http.get(url);
     var result = json.decode(utf8.decode(response.bodyBytes));
     print(result);

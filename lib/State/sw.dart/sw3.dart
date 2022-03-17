@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:test1/State/page/countdown-page.dart';
+import 'package:test1/State/page/countdown-page2.dart';
 import 'package:test1/State/sw.dart/name3-1edit.dart';
 import 'package:test1/State/sw.dart/name3-2edit.dart';
 import 'package:test1/State/sw.dart/name3-3edit.dart';
@@ -92,7 +94,18 @@ class _Update3State extends State<Update3> {
                                 MaterialPageRoute(
                                     builder: (context) => name4edit(_V1, _V3)));
                           },
-                          icon: Icon(Icons.edit, color: Colors.black))
+                          icon: Icon(Icons.edit, color: Colors.black)),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CountdownPage(
+                                          'Dart/Mqtt_client/',
+                                          'led1',
+                                        )));
+                          },
+                          icon: Icon(Icons.timer, color: Colors.black)),
                     ],
                   ),
                 ),
@@ -119,7 +132,18 @@ class _Update3State extends State<Update3> {
                                 MaterialPageRoute(
                                     builder: (context) => name5edit(_V1, _V4)));
                           },
-                          icon: Icon(Icons.edit, color: Colors.black))
+                          icon: Icon(Icons.edit, color: Colors.black)),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CountdownPage(
+                                          'Dart/Mqtt_client/',
+                                          'led2',
+                                        )));
+                          },
+                          icon: Icon(Icons.timer, color: Colors.black)),
                     ],
                   ),
                 ),
@@ -146,7 +170,18 @@ class _Update3State extends State<Update3> {
                                 MaterialPageRoute(
                                     builder: (context) => name6edit(_V1, _V5)));
                           },
-                          icon: Icon(Icons.edit, color: Colors.black))
+                          icon: Icon(Icons.edit, color: Colors.black)),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CountdownPage(
+                                          'Dart/Mqtt_client/',
+                                          'led3',
+                                        )));
+                          },
+                          icon: Icon(Icons.timer, color: Colors.black)),
                     ],
                   ),
                 ),
@@ -158,9 +193,8 @@ class _Update3State extends State<Update3> {
     );
   }
 
-
   Future deleteTodo() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/delete-devicelist3/$_V1');
+    var url = Uri.http('192.168.1.120:8000', '/api/delete-devicelist3/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     var response = await http.delete(url, headers: header);
     print('-------reuslt-------');

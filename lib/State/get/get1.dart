@@ -208,7 +208,7 @@ class _AddPageState extends State<Get1> {
   }
 
   Future<dynamic> getTodolist() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist1');
+    var url = Uri.http('192.168.1.120:8000', '/api/all-devicelist1');
     var response = await http.get(url);
     var result = json.decode(utf8.decode(response.bodyBytes));
     print(result);
@@ -216,7 +216,7 @@ class _AddPageState extends State<Get1> {
   }
 
   Future<dynamic> getTodolist2() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist2');
+    var url = Uri.http('192.168.1.120:8000', '/api/all-devicelist2');
     var response = await http.get(url);
     var result = json.decode(utf8.decode(response.bodyBytes));
     print(result);
@@ -224,7 +224,7 @@ class _AddPageState extends State<Get1> {
   }
 
   Future<dynamic> getTodolist3() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/all-devicelist3');
+    var url = Uri.http('192.168.1.120:8000', '/api/all-devicelist3');
     var response = await http.get(url);
     var result = json.decode(utf8.decode(response.bodyBytes));
     print(result);

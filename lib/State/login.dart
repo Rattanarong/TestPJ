@@ -50,8 +50,8 @@ class _LoginState extends State<Login> {
           textStyle: Myconstat().h9Style(),
         ),
         TextButton(
-          onPressed: () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Register())),
+          onPressed: () =>
+              Navigator.pushNamed(context, Myconstat.routeregister),
           child: Text(
             'create Account',
             style: Myconstat().h8Style(),
@@ -181,7 +181,7 @@ class _LoginState extends State<Login> {
   }
 
   Future login() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/login/');
+    var url = Uri.http('192.168.1.120:8000', '/api/login/');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
         '{"username":"${usernameController.text}","password":"${passwordController.text}"}';
@@ -198,9 +198,11 @@ class _LoginState extends State<Login> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       // passwordController.clear();
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Mainpage();
-      }));
+      // Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //   return Mainpage();
+      // }));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Mainpage()));
     }
   }
 }

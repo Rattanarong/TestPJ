@@ -72,7 +72,7 @@ class _edit1State extends State<edit1> {
   }
 
   Future updateTodo() async {
-    var url = Uri.http('192.168.1.146:8000', '/api/update-devicelist1/$_V1');
+    var url = Uri.http('192.168.1.120:8000', '/api/update-devicelist1/$_V1');
     Map<String, String> header = {'Content-type': 'application/json'};
     String jsondata = '{"qrname1":"${qrname1Controller.text}"}';
     var response = await http.put(url, headers: header, body: jsondata);
